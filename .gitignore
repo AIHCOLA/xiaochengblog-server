@@ -9,5 +9,8 @@ target/
 # Node (music-api)
 music-api/node_modules/
 
+# Docker env
+.env
+
 # Logs
 *.log

@@ -1,0 +1,10 @@
+target/
+.idea/
+.git/
+*.iml
+.vscode/
+*.log
+.env
+docker-compose.yml
+music-api/node_modules/
+music-api/multi-platform/node_modules/
