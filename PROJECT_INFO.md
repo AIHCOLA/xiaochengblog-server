@@ -131,7 +131,7 @@ npm start
 
 音乐 API 运行在 `http://localhost:3000`。
 
-### 5. 默认数据库
+### 5. 默认数据
 
 首次启动时，`DataInitializer` 会自动插入演示数据（仅当 users 表为空时），包括：
 
