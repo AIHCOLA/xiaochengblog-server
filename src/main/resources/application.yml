@@ -1,0 +1,94 @@
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3308/xiaocheng?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  sql:
+    init:
+      mode: never
+
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss'Z'
+    time-zone: Asia/Shanghai
+    serialization:
+
+      write-dates-as-timestamps: false
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID:changeme}
+            client-secret: ${GITHUB_CLIENT_SECRET:changeme}
+            scope: read:user,user:email
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:changeme}
+            client-secret: ${GOOGLE_CLIENT_SECRET:changeme}
+            scope: openid,profile,email
+          wechat:
+            client-id: ${WECHAT_APP_ID:changeme}
+            client-secret: ${WECHAT_APP_SECRET:changeme}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: snsapi_login
+            client-name: WeChat
+            authorization-grant-type: authorization_code
+            client-authentication-method: none
+        provider:
+          wechat:
+            authorization-uri: https://open.weixin.qq.com/connect/qrconnect
+            token-uri: https://api.weixin.qq.com/sns/oauth2/access_token
+            user-info-uri: https://api.weixin.qq.com/sns/userinfo
+            user-name-attribute: openid
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:xiaocheng-blog-jwt-secret-key-2025-very-long-and-secure-random-string}
+  expiration: 43200000  # 12 hours in ms
+  refresh-expiration: 43200000  # 12 hours in ms
+
+# MyBatis-Plus Configuration
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.xiaochengblog.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# Cache (Caffeine)
+spring.cache:
+  type: caffeine
+  caffeine.spec: maximumSize=500,expireAfterWrite=10m
+
+# SpringDoc OpenAPI
+springdoc:
+  api-docs.path: /api-docs
+  swagger-ui.path: /swagger-ui.html
+  default-produces-media-type: application/json
+
+# App config
+app:
+  oauth2:
+    frontend-redirect-uri: http://localhost:5173/oauth/callback
+  rate-limit:
+    auth:
+      capacity: 10
+      refill-tokens: 10
+      refill-minutes: 1
+
+logging:
+  level:
+    com.xiaochengblog: DEBUG

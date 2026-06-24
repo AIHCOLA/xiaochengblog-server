@@ -1,0 +1,14 @@
+{
+  "name": "multi-platform-music-api",
+  "version": "1.0.0",
+  "description": "Multi-platform music search API (QQ, KuGou, Qishui)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@sansenjian/qq-music-api": "^2.4.0",
+    "axios": "^1.7.0",
+    "express": "^4.21.0"
+  }
+}
